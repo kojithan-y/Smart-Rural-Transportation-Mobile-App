@@ -6,6 +6,10 @@ import 'features/auth/admin_login_screen.dart';
 import 'features/auth/connector_login_screen.dart';
 import 'features/auth/driver_register_screen.dart';
 import 'features/auth/passenger_register_screen.dart';
+import 'features/auth/admin_register_screen.dart';
+import 'features/auth/connector_register_screen.dart';
+import '../../core/validators.dart';
+import '../../widgets/gradient_button.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,8 +37,10 @@ class MyApp extends StatelessWidget {
         '/auth/passenger/register': (context) => const PassengerRegisterScreen(),
         '/passengerHome': (context) => const _PassengerHomePlaceholder(),
         '/auth/admin/login': (context) => const AdminLoginScreen(),
+        '/auth/admin/register': (context) => const AdminRegisterScreen(),
         '/adminDashboard': (context) => const _AdminDashboardPlaceholder(),
         '/auth/connector/login': (context) => const ConnectorLoginScreen(),
+        '/auth/connector/register': (context) => const ConnectorRegisterScreen(),
         '/connectorPanel': (context) => const _ConnectorPanelPlaceholder(),
       },
     );
