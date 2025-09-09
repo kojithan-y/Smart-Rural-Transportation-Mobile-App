@@ -143,9 +143,7 @@ class _ConnectorLoginScreenState extends State<ConnectorLoginScreen> {
                             const Text('Not a member? '),
                             TextButton(
                               onPressed: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Sign up — coming soon')),
-                                );
+                                Navigator.pushNamed(context, '/auth/connector/register');
                               },
                               child: const Text('Sign up now'),
                             ),

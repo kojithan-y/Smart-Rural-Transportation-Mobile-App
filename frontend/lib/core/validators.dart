@@ -62,4 +62,16 @@ class Validators {
     }
     return null;
   }
+
+  static String? vehicleNumber(String? v) {
+    if (requiredField(v, fieldName: 'Vehicle number') != null) {
+      return 'Vehicle number is required';
+    }
+    final value = v!.toUpperCase().trim();
+    final reg = RegExp(r'^[A-Z0-9-\/]{2,15}$');
+    if (!reg.hasMatch(value)) {
+      return 'Enter a valid vehicle number';
+    }
+    return null;
+  }
 }
