@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
 }
 
 class _DriverHomePlaceholder extends StatelessWidget {
-  const _DriverHomePlaceholder({super.key});
+  const _DriverHomePlaceholder();
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,7 @@ class _DriverHomePlaceholder extends StatelessWidget {
 }
 
 class _PassengerHomePlaceholder extends StatelessWidget {
-  const _PassengerHomePlaceholder({super.key});
+  const _PassengerHomePlaceholder();
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +66,7 @@ class _PassengerHomePlaceholder extends StatelessWidget {
 }
 
 class _AdminDashboardPlaceholder extends StatelessWidget {
-  const _AdminDashboardPlaceholder({super.key});
+  const _AdminDashboardPlaceholder();
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,7 @@ class _AdminDashboardPlaceholder extends StatelessWidget {
 }
 
 class _ConnectorPanelPlaceholder extends StatelessWidget {
-  const _ConnectorPanelPlaceholder({super.key});
+  const _ConnectorPanelPlaceholder();
 
   @override
   Widget build(BuildContext context) {
