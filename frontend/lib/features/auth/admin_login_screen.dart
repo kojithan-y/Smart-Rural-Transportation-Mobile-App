@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import '../../core/validators.dart';
 import '../../widgets/gradient_button.dart';
 
-class DriverLoginScreen extends StatefulWidget {
-  const DriverLoginScreen({super.key});
+class AdminLoginScreen extends StatefulWidget {
+  const AdminLoginScreen({super.key});
 
   @override
-  State<DriverLoginScreen> createState() => _DriverLoginScreenState();
+  State<AdminLoginScreen> createState() => _AdminLoginScreenState();
 }
 
-class _DriverLoginScreenState extends State<DriverLoginScreen> {
+class _AdminLoginScreenState extends State<AdminLoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailCtrl = TextEditingController();
   final _passwordCtrl = TextEditingController();
@@ -34,7 +34,7 @@ class _DriverLoginScreenState extends State<DriverLoginScreen> {
     try {
       await Future.delayed(const Duration(seconds: 1));
       if (!mounted) return;
-      Navigator.pushReplacementNamed(context, '/driverHome');
+      Navigator.pushReplacementNamed(context, '/adminDashboard');
     } catch (_) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -69,7 +69,7 @@ class _DriverLoginScreenState extends State<DriverLoginScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          'Driver Login',
+                          'App Admin Login',
                           style: theme.textTheme.titleLarge?.copyWith(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -96,9 +96,9 @@ class _DriverLoginScreenState extends State<DriverLoginScreen> {
                             prefixIcon: const Icon(Icons.lock_rounded),
                             suffixIcon: IconButton(
                               tooltip: _obscure ? 'Show password' : 'Hide password',
-                              icon: Icon(
-                                _obscure ? Icons.visibility_rounded : Icons.visibility_off_rounded,
-                              ),
+                              icon: Icon(_obscure
+                                  ? Icons.visibility_rounded
+                                  : Icons.visibility_off_rounded),
                               onPressed: () => setState(() => _obscure = !_obscure),
                             ),
                           ),
@@ -143,7 +143,9 @@ class _DriverLoginScreenState extends State<DriverLoginScreen> {
                             const Text('Not a member? '),
                             TextButton(
                               onPressed: () {
-                                Navigator.pushNamed(context, '/auth/driver/register');
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Sign up — coming soon')),
+                                );
                               },
                               child: const Text('Sign up now'),
                             ),

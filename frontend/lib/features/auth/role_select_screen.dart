@@ -32,36 +32,22 @@ class RoleSelectScreen extends StatelessWidget {
                   _RoleCard(
                     icon: Icons.directions_bus_filled_rounded,
                     label: 'Bus Driver',
-                    onTap: () {
-                      Navigator.pushNamed(context, '/auth/driver/login');
-                    },
+                    onTap: () => Navigator.pushNamed(context, '/auth/driver/login'),
                   ),
                   _RoleCard(
                     icon: Icons.person_rounded,
                     label: 'Passenger',
-                    onTap: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Coming soon')),
-                      );
-                    },
+                    onTap: () => Navigator.pushNamed(context, '/auth/passenger/login'),
                   ),
                   _RoleCard(
                     icon: Icons.admin_panel_settings_rounded,
                     label: 'App Admin',
-                    onTap: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Coming soon')),
-                      );
-                    },
+                    onTap: () => Navigator.pushNamed(context, '/auth/admin/login'),
                   ),
                   _RoleCard(
                     icon: Icons.link_rounded,
                     label: 'Connector',
-                    onTap: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Coming soon')),
-                      );
-                    },
+                    onTap: () => Navigator.pushNamed(context, '/auth/connector/login'),
                   ),
                 ],
               ),
@@ -95,28 +81,23 @@ class _RoleCard extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(24),
-        child: Ink(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(24),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(icon, size: 48, color: scheme.primary),
-                const SizedBox(height: 12),
-                Text(
-                  label,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: scheme.onSurface,
-                  ),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 48, color: scheme.primary),
+              const SizedBox(height: 12),
+              Text(
+                label,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: scheme.onSurface,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

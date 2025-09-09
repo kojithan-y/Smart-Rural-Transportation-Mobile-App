@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import '../../core/validators.dart';
 import '../../widgets/gradient_button.dart';
 
-class DriverLoginScreen extends StatefulWidget {
-  const DriverLoginScreen({super.key});
+class PassengerLoginScreen extends StatefulWidget {
+  const PassengerLoginScreen({super.key});
 
   @override
-  State<DriverLoginScreen> createState() => _DriverLoginScreenState();
+  State<PassengerLoginScreen> createState() => _PassengerLoginScreenState();
 }
 
-class _DriverLoginScreenState extends State<DriverLoginScreen> {
+class _PassengerLoginScreenState extends State<PassengerLoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailCtrl = TextEditingController();
   final _passwordCtrl = TextEditingController();
@@ -34,7 +34,7 @@ class _DriverLoginScreenState extends State<DriverLoginScreen> {
     try {
       await Future.delayed(const Duration(seconds: 1));
       if (!mounted) return;
-      Navigator.pushReplacementNamed(context, '/driverHome');
+      Navigator.pushReplacementNamed(context, '/passengerHome');
     } catch (_) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -69,7 +69,7 @@ class _DriverLoginScreenState extends State<DriverLoginScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          'Driver Login',
+                          'Passenger Login',
                           style: theme.textTheme.titleLarge?.copyWith(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -143,7 +143,7 @@ class _DriverLoginScreenState extends State<DriverLoginScreen> {
                             const Text('Not a member? '),
                             TextButton(
                               onPressed: () {
-                                Navigator.pushNamed(context, '/auth/driver/register');
+                                Navigator.pushNamed(context, '/auth/passenger/register');
                               },
                               child: const Text('Sign up now'),
                             ),
