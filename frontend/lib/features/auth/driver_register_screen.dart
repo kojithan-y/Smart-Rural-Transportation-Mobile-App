@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/validators.dart';
 import '../../widgets/gradient_button.dart';
+import '../../core/auth_api.dart';
 
 class DriverRegisterScreen extends StatefulWidget {
   const DriverRegisterScreen({super.key});
@@ -26,6 +27,8 @@ class _DriverRegisterScreenState extends State<DriverRegisterScreen> {
   bool _agree = false;
   bool _loading = false;
   bool _canSubmit = false;
+
+  final _api = DriverAuthApi();
 
   @override
   void dispose() {
@@ -59,18 +62,26 @@ class _DriverRegisterScreenState extends State<DriverRegisterScreen> {
       _canSubmit = false;
     });
 
-    final payload = {
-      'name': _nameCtrl.text.trim(),
-      'email': _emailCtrl.text.trim(),
-      'password': _passwordCtrl.text,
-      'phone': _phoneCtrl.text.trim().isEmpty ? null : _phoneCtrl.text.trim(),
-      'licenseNo': _licenseCtrl.text.trim().toUpperCase(),
-      'nic': _nicCtrl.text.trim().toUpperCase(),
-      'busNumber': _busCtrl.text.trim().toUpperCase(),
-    };
-
     try {
-      await Future.delayed(const Duration(seconds: 1));
+      final data = await _api.signup(
+        fullName: _nameCtrl.text.trim(),
+        email: _emailCtrl.text.trim(),
+        password: _passwordCtrl.text,
+        confirmPassword: _confirmCtrl.text,
+        phone: _phoneCtrl.text.trim(),
+        licenseNumber: _licenseCtrl.text.trim().toUpperCase(),
+        nicNumber: _nicCtrl.text.trim().toUpperCase(),
+        busNumber: _busCtrl.text.trim().toUpperCase(),
+      );
+
+      final tokens = Map<String, dynamic>.from(data['tokens'] as Map);
+      final driver = Map<String, dynamic>.from(data['driver'] as Map);
+      await AuthStorage.save(
+        access: tokens['access'] as String,
+        refresh: tokens['refresh'] as String,
+        driver: driver,
+      );
+
       if (!mounted) return;
       Navigator.pushReplacementNamed(context, '/driverHome');
     } catch (e) {
@@ -193,21 +204,21 @@ class _DriverRegisterScreenState extends State<DriverRegisterScreen> {
                         ),
                         const SizedBox(height: 12),
 
-                        // 5) Phone (optional)
+                        // 5) Phone (required; Sri Lankan format 0XXXXXXXXX)
                         TextFormField(
                           controller: _phoneCtrl,
                           keyboardType: TextInputType.phone,
                           textInputAction: TextInputAction.next,
                           decoration: const InputDecoration(
-                            labelText: 'Phone (optional)',
+                            labelText: 'Phone',
                             prefixIcon: Icon(Icons.phone_outlined),
+                            helperText: 'Sri Lankan format: 0XXXXXXXXX',
                           ),
                           validator: (v) {
                             final t = v?.trim() ?? '';
-                            if (t.isEmpty) return null;
-                            if (t.length < 9 || t.length > 15) {
-                              return 'Enter a valid phone (9–15 digits)';
-                            }
+                            if (t.isEmpty) return 'Phone is required';
+                            final reg = RegExp(r'^0\d{9}$');
+                            if (!reg.hasMatch(t)) return 'Enter a valid phone (0XXXXXXXXX)';
                             return null;
                           },
                         ),

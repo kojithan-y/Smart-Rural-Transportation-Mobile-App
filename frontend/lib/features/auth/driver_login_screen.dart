@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/validators.dart';
 import '../../widgets/gradient_button.dart';
+import '../../core/auth_api.dart';
 
 class DriverLoginScreen extends StatefulWidget {
   const DriverLoginScreen({super.key});
@@ -18,6 +19,8 @@ class _DriverLoginScreenState extends State<DriverLoginScreen> {
   bool _obscure = true;
   bool _loading = false;
 
+  final _api = DriverAuthApi();
+
   @override
   void dispose() {
     _emailCtrl.dispose();
@@ -32,13 +35,27 @@ class _DriverLoginScreenState extends State<DriverLoginScreen> {
 
     setState(() => _loading = true);
     try {
-      await Future.delayed(const Duration(seconds: 1));
+      final data = await _api.login(
+        email: _emailCtrl.text.trim(),
+        password: _passwordCtrl.text,
+      );
+      final tokens = Map<String, dynamic>.from(data['tokens'] as Map);
+      final driver = Map<String, dynamic>.from(data['driver'] as Map);
+
+      if (_rememberMe) {
+        await AuthStorage.save(
+          access: tokens['access'] as String,
+          refresh: tokens['refresh'] as String,
+          driver: driver,
+        );
+      }
+
       if (!mounted) return;
       Navigator.pushReplacementNamed(context, '/driverHome');
-    } catch (_) {
+    } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Login failed. Please try again.')),
+        SnackBar(content: Text(e.toString())),
       );
     } finally {
       if (mounted) setState(() => _loading = false);
